@@ -39,33 +39,7 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'docName' => 'required|string|max:255',
-            'filename' => 'required|file|mimes:pdf,txt',
-            'gpt_prompt' => 'required|string',
-        ]);
-
-        $path = $request->file('filename')->store('documents');
-
-        $document = Document::create([
-            'docName' => $request->docName,
-            'filename' => $path,
-            'gpt_prompt' => $request->gpt_prompt,
-            'created_by' => auth()->id(),
-        ]);
-
-        // Call ChatGPT API here and save the response
-        $response = $this->callGPTAPI($request->gpt_prompt);
-        $document->gpt_processed_data = $response;
-        $document->save();
-
-        return redirect()->route('documents.show', $document->id);
-    }
-
-    private function callGPTAPI($prompt)
-    {
-        // Implement the logic to call ChatGPT API
-        return 'Mocked GPT response for: ' . $prompt;
+        return true;
     }
 
     public function listProcessedDocuments()
@@ -99,15 +73,13 @@ class DocumentController extends Controller
                 'created_by' => auth()->user()->id,
             ]);
 
-            // Here, you would typically send the document content and prompt to the GPT API
-            // Assuming you have a service to handle the GPT API call, you could do something like:
             $processedData = $this->gptService->processDocument($filePath, $request->gpt_prompt);
             $document->gpt_processed_data = $processedData;
             $document->save();
 
             //return redirect()->route('documents.processed')->with('success', 'Document uploaded and processed successfully!');
 
-            return redirect()->route('documents.processed');
+            return redirect()->route('documents.show', $document->id);
         }
 
         return back()->withErrors('File upload failed.');

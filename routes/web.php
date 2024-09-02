@@ -22,9 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/documents/processed', [DocumentController::class, 'listProcessedDocuments'])->name('documents.processed');
 
     // Route to show the document upload form
-    Route::get('/documents/upload', function () {
-        return view('documents.document_upload');
-    })->name('documents.upload_form');
+    Route::get('/documents/upload', function () { return view('documents.document_upload'); })->name('documents.upload_form');
 
     // Route to handle the document upload
     Route::post('/documents/upload', [DocumentController::class, 'uploadDocument'])->name('documents.upload');
