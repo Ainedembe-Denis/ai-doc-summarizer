@@ -51,12 +51,9 @@
                             </div>
                         </div>
 
-                        {!! NoCaptcha::display() !!}
-                        @if ($errors->has('g-recaptcha-response'))
-                            <span class="invalid-feedback" style="display: block;">
-                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-                            </span>
-                        @endif
+                            <div class="form-group">
+                                {!! htmlScriptTagJsApi(env('RECAPTCHA_SITEKEY')) !!}
+                            </div>
 
 
                         <div class="row mb-0">
@@ -78,4 +75,7 @@
         </div>
     </div>
 </div>
+{!! NoCaptcha::renderJs() !!}
+
+
 @endsection

@@ -61,6 +61,10 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            {!! htmlScriptTagJsApi(env('RECAPTCHA_SITEKEY')) !!}
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
